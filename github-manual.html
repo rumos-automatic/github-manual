@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 GitHub完全マスターガイド - Claude Code活用編</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <style>
+        /* カスタムアニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* プログレスバーのアニメーション */
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        
+        .progress-animation {
+            animation: progress 2s ease-out;
+        }
+        
+        /* コードブロックのスタイル */
+        .code-block {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2px;
+            border-radius: 0.5rem;
+        }
+        
+        .code-content {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 0.4rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        /* ホバーエフェクト */
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        /* チェックリストアニメーション */
+        .check-animation {
+            transition: all 0.3s ease;
+        }
+        
+        .checked {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        
+        /* スムーススクロール */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* カードのグラデーション */
+        .gradient-border {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2px;
+            border-radius: 1rem;
+        }
+        
+        /* ナビゲーションの固定 */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* タイムラインスタイル */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- ヘッダー -->
+    <header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+        <div class="container mx-auto px-4 py-8">
+            <div class="fade-in-up">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    <i class="fab fa-github mr-3"></i>GitHub完全マスターガイド
+                </h1>
+                <p class="text-xl opacity-90">Claude Codeで日本語だけでGitHubを使いこなそう！</p>
+                <div class="mt-6 flex flex-wrap gap-4">
+                    <span class="bg-white/20 px-4 py-2 rounded-full">
+                        <i class="fas fa-clock mr-2"></i>学習時間: 約30分
+                    </span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full">
+                        <i class="fas fa-level-up-alt mr-2"></i>難易度: 初心者向け
+                    </span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full">
+                        <i class="fas fa-robot mr-2"></i>Claude Code対応
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- ナビゲーション -->
+    <nav class="sticky-nav border-b">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex flex-wrap gap-4 text-sm">
+                <a href="#intro" class="nav-link text-purple-600 hover:text-purple-800 font-semibold">
+                    <i class="fas fa-info-circle mr-1"></i>はじめに
+                </a>
+                <a href="#diagrams" class="nav-link text-purple-600 hover:text-purple-800 font-semibold">
+                    <i class="fas fa-diagram-project mr-1"></i>図解
+                </a>
+                <a href="#setup" class="nav-link text-purple-600 hover:text-purple-800 font-semibold">
+                    <i class="fas fa-cog mr-1"></i>セットアップ
+                </a>
+                <a href="#commands" class="nav-link text-purple-600 hover:text-purple-800 font-semibold">
+                    <i class="fas fa-terminal mr-1"></i>コマンド
+                </a>
+                <a href="#practice" class="nav-link text-purple-600 hover:text-purple-800 font-semibold">
+                    <i class="fas fa-code mr-1"></i>実践
+                </a>
+                <a href="#checklist" class="nav-link text-purple-600 hover:text-purple-800 font-semibold">
+                    <i class="fas fa-check-square mr-1"></i>チェックリスト
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- メインコンテンツ -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- プログレスバー -->
+        <div class="mb-8">
+            <div class="bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div id="progress-bar" class="bg-gradient-to-r from-purple-600 to-indigo-600 h-full w-0 transition-all duration-500"></div>
+            </div>
+            <p class="text-center mt-2 text-gray-600">
+                <span id="progress-text">0</span>% 完了
+            </p>
+        </div>
+        
+        <!-- セクション: はじめに -->
+        <section id="intro" class="mb-12 fade-in-up">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-rocket text-purple-600 mr-3"></i>GitHubとは？
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="gradient-border">
+                        <div class="bg-white rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3 text-purple-600">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>よくある悲劇
+                            </h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><i class="fas fa-times text-red-500 mr-2"></i>パソコンが壊れてコードが消えた</li>
+                                <li><i class="fas fa-times text-red-500 mr-2"></i>動いてたコードが動かなくなった</li>
+                                <li><i class="fas fa-times text-red-500 mr-2"></i>3日前のコードに戻したい</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="gradient-border">
+                        <div class="bg-white rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3 text-indigo-600">
+                                <i class="fas fa-check-circle mr-2"></i>GitHubで解決！
+                            </h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><i class="fas fa-check text-green-500 mr-2"></i>クラウドに自動バックアップ</li>
+                                <li><i class="fas fa-check text-green-500 mr-2"></i>すべての変更履歴を保存</li>
+                                <li><i class="fas fa-check text-green-500 mr-2"></i>いつでも過去に戻れる</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ゲームの例え -->
+                <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg p-6 mt-6">
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-gamepad text-purple-600 mr-2"></i>
+                        GitHubは「無限セーブ可能なゲーム」
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-2">普通のゲーム:</h4>
+                            <ul class="text-gray-600 space-y-1">
+                                <li>• セーブデータは3つまで</li>
+                                <li>• 上書きすると消える</li>
+                                <li>• 前のセーブに戻れない</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-2">GitHub:</h4>
+                            <ul class="text-gray-600 space-y-1">
+                                <li>• <span class="text-purple-600 font-semibold">無限にセーブ可能</span></li>
+                                <li>• <span class="text-purple-600 font-semibold">すべての履歴が残る</span></li>
+                                <li>• <span class="text-purple-600 font-semibold">いつでも戻れる</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- セクション: 図解 -->
+        <section id="diagrams" class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-diagram-project text-purple-600 mr-3"></i>GitとGitHubの仕組みを図解
+                </h2>
+                
+                <!-- ローカルとリモートの関係 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-gray-700">
+                        <i class="fas fa-cloud-upload-alt mr-2"></i>ローカル（あなたのPC）とリモート（GitHub）の関係
+                    </h3>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6">
+                        <svg viewBox="0 0 800 400" class="w-full h-auto">
+                            <!-- ローカルPC -->
+                            <g id="local-pc">
+                                <rect x="50" y="150" width="280" height="200" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+                                <text x="190" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="#4f46e5">あなたのPC（ローカル）</text>
+                                
+                                <!-- フォルダアイコン -->
+                                <rect x="80" y="210" width="60" height="50" fill="#fbbf24" rx="5"/>
+                                <text x="110" y="240" text-anchor="middle" font-size="12" fill="white">📁</text>
+                                <text x="110" y="280" text-anchor="middle" font-size="11" fill="#4b5563">tetris/</text>
+                                
+                                <!-- ファイル群 -->
+                                <rect x="160" y="210" width="140" height="100" fill="white" stroke="#d1d5db" stroke-width="1" rx="5"/>
+                                <text x="230" y="230" text-anchor="middle" font-size="10" fill="#4b5563">main.js</text>
+                                <text x="230" y="245" text-anchor="middle" font-size="10" fill="#4b5563">renderer.js</text>
+                                <text x="230" y="260" text-anchor="middle" font-size="10" fill="#4b5563">index.html</text>
+                                <text x="230" y="275" text-anchor="middle" font-size="10" fill="#4b5563">package.json</text>
+                                <text x="230" y="290" text-anchor="middle" font-size="10" fill="#4b5563">style.css</text>
+                                
+                                <!-- Gitリポジトリ -->
+                                <circle cx="110" cy="320" r="15" fill="#f97316"/>
+                                <text x="110" y="325" text-anchor="middle" font-size="20" fill="white">G</text>
+                                <text x="150" y="325" font-size="11" fill="#4b5563">.git（履歴）</text>
+                            </g>
+                            
+                            <!-- GitHub（リモート） -->
+                            <g id="remote-github">
+                                <rect x="470" y="150" width="280" height="200" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+                                <text x="610" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="#16a34a">GitHub（リモート）</text>
+                                
+                                <!-- GitHubロゴ -->
+                                <circle cx="610" cy="230" r="30" fill="#1f2937"/>
+                                <text x="610" y="240" text-anchor="middle" font-size="30" fill="white">🐙</text>
+                                
+                                <!-- クラウドアイコン -->
+                                <text x="610" y="280" text-anchor="middle" font-size="14" fill="#4b5563">☁️ クラウド保存</text>
+                                <text x="610" y="300" text-anchor="middle" font-size="11" fill="#6b7280">世界中からアクセス可能</text>
+                                <text x="610" y="320" text-anchor="middle" font-size="11" fill="#6b7280">友達と共有できる</text>
+                            </g>
+                            
+                            <!-- 矢印（プッシュ） -->
+                            <g id="push-arrow">
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                        <polygon points="0 0, 10 3, 0 6" fill="#7c3aed"/>
+                                    </marker>
+                                </defs>
+                                <path d="M 340 220 Q 400 180 460 220" stroke="#7c3aed" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                                <text x="400" y="190" text-anchor="middle" font-size="14" font-weight="bold" fill="#7c3aed">git push</text>
+                                <text x="400" y="205" text-anchor="middle" font-size="11" fill="#6b7280">アップロード</text>
+                                
+                                <!-- アニメーション -->
+                                <circle r="5" fill="#7c3aed">
+                                    <animateMotion dur="2s" repeatCount="indefinite">
+                                        <mpath href="#push-path"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="push-path" d="M 340 220 Q 400 180 460 220" stroke="none" fill="none"/>
+                            </g>
+                            
+                            <!-- 矢印（プル） -->
+                            <g id="pull-arrow">
+                                <path d="M 460 280 Q 400 320 340 280" stroke="#059669" stroke-width="3" fill="none" marker-end="url(#arrowhead-green)"/>
+                                <defs>
+                                    <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                        <polygon points="0 0, 10 3, 0 6" fill="#059669"/>
+                                    </marker>
+                                </defs>
+                                <text x="400" y="310" text-anchor="middle" font-size="14" font-weight="bold" fill="#059669">git pull</text>
+                                <text x="400" y="325" text-anchor="middle" font-size="11" fill="#6b7280">ダウンロード</text>
+                                
+                                <!-- アニメーション -->
+                                <circle r="5" fill="#059669">
+                                    <animateMotion dur="2s" repeatCount="indefinite">
+                                        <mpath href="#pull-path"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="pull-path" d="M 460 280 Q 400 320 340 280" stroke="none" fill="none"/>
+                            </g>
+                            
+                            <!-- コマンド例 -->
+                            <g id="commands">
+                                <rect x="50" y="20" width="700" height="100" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+                                <text x="400" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#d97706">Claude Codeでの操作例</text>
+                                
+                                <text x="80" y="70" font-size="12" fill="#92400e">💾 保存してアップロード:</text>
+                                <text x="80" y="90" font-size="11" fill="#78350f" font-family="monospace">「デザイン変更完了」で保存してGitHubにプッシュ</text>
+                                
+                                <text x="420" y="70" font-size="12" fill="#92400e">⬇️ 最新版を取得:</text>
+                                <text x="420" y="90" font-size="11" fill="#78350f" font-family="monospace">GitHubから最新のコードを取得して</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- セーブポイントの流れ -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-gray-700">
+                        <i class="fas fa-timeline mr-2"></i>セーブポイント（コミット）の流れ
+                    </h3>
+                    
+                    <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6">
+                        <svg viewBox="0 0 800 300" class="w-full h-auto">
+                            <!-- タイムライン -->
+                            <line x1="100" y1="150" x2="700" y2="150" stroke="#9333ea" stroke-width="3"/>
+                            
+                            <!-- セーブポイント1 -->
+                            <g id="savepoint1">
+                                <circle cx="150" cy="150" r="20" fill="#22c55e"/>
+                                <text x="150" y="156" text-anchor="middle" font-size="14" font-weight="bold" fill="white">1</text>
+                                <rect x="110" y="180" width="80" height="60" rx="5" fill="white" stroke="#22c55e" stroke-width="2"/>
+                                <text x="150" y="200" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="bold">初期版完成</text>
+                                <text x="150" y="215" text-anchor="middle" font-size="9" fill="#4b5563">基本テトリス</text>
+                                <text x="150" y="228" text-anchor="middle" font-size="9" fill="#4b5563">動く！</text>
+                            </g>
+                            
+                            <!-- セーブポイント2 -->
+                            <g id="savepoint2">
+                                <circle cx="300" cy="150" r="20" fill="#3b82f6"/>
+                                <text x="300" y="156" text-anchor="middle" font-size="14" font-weight="bold" fill="white">2</text>
+                                <rect x="260" y="180" width="80" height="60" rx="5" fill="white" stroke="#3b82f6" stroke-width="2"/>
+                                <text x="300" y="200" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="bold">デザイン変更</text>
+                                <text x="300" y="215" text-anchor="middle" font-size="9" fill="#4b5563">ネオン風</text>
+                                <text x="300" y="228" text-anchor="middle" font-size="9" fill="#4b5563">かっこいい！</text>
+                            </g>
+                            
+                            <!-- セーブポイント3 -->
+                            <g id="savepoint3">
+                                <circle cx="450" cy="150" r="20" fill="#f59e0b"/>
+                                <text x="450" y="156" text-anchor="middle" font-size="14" font-weight="bold" fill="white">3</text>
+                                <rect x="410" y="180" width="80" height="60" rx="5" fill="white" stroke="#f59e0b" stroke-width="2"/>
+                                <text x="450" y="200" text-anchor="middle" font-size="10" fill="#d97706" font-weight="bold">キャラ追加</text>
+                                <text x="450" y="215" text-anchor="middle" font-size="9" fill="#4b5563">立ち絵表示</text>
+                                <text x="450" y="228" text-anchor="middle" font-size="9" fill="#4b5563">表情変化</text>
+                            </g>
+                            
+                            <!-- バグ発生！ -->
+                            <g id="bug-point">
+                                <circle cx="550" cy="150" r="20" fill="#ef4444"/>
+                                <text x="550" y="156" text-anchor="middle" font-size="14" font-weight="bold" fill="white">!</text>
+                                <rect x="510" y="50" width="80" height="60" rx="5" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+                                <text x="550" y="70" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="bold">バグ発生</text>
+                                <text x="550" y="85" text-anchor="middle" font-size="9" fill="#7f1d1d">レイアウト</text>
+                                <text x="550" y="98" text-anchor="middle" font-size="9" fill="#7f1d1d">崩れた！</text>
+                            </g>
+                            
+                            <!-- 戻る矢印 -->
+                            <g id="rollback-arrow">
+                                <path d="M 540 140 Q 495 90 460 140" stroke="#ef4444" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+                                <polygon points="455,138 465,138 460,145" fill="#ef4444"/>
+                                <text x="495" y="105" text-anchor="middle" font-size="11" fill="#ef4444" font-weight="bold">git checkout</text>
+                                <text x="495" y="120" text-anchor="middle" font-size="9" fill="#7f1d1d">戻る！</text>
+                            </g>
+                            
+                            <!-- セーブポイント4（修正版） -->
+                            <g id="savepoint4">
+                                <circle cx="650" cy="150" r="20" fill="#8b5cf6"/>
+                                <text x="650" y="156" text-anchor="middle" font-size="14" font-weight="bold" fill="white">4</text>
+                                <rect x="610" y="180" width="80" height="60" rx="5" fill="white" stroke="#8b5cf6" stroke-width="2"/>
+                                <text x="650" y="200" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="bold">エフェクト</text>
+                                <text x="650" y="215" text-anchor="middle" font-size="9" fill="#4b5563">修正版</text>
+                                <text x="650" y="228" text-anchor="middle" font-size="9" fill="#4b5563">今度はOK！</text>
+                            </g>
+                            
+                            <!-- 説明テキスト -->
+                            <text x="400" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#1f2937">セーブポイントを作りながら開発</text>
+                            <text x="400" y="280" text-anchor="middle" font-size="12" fill="#6b7280">各セーブポイントには名前（コミットメッセージ）が付いていて、いつでも戻れる！</text>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- タイムマシン図解 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-gray-700">
+                        <i class="fas fa-history mr-2"></i>Gitは開発のタイムマシン！
+                    </h3>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-blue-50 rounded-lg p-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- 従来の開発 -->
+                            <div class="bg-white rounded-lg p-4 shadow">
+                                <h4 class="font-bold text-red-600 mb-3">😱 Git無しの開発</h4>
+                                <svg viewBox="0 0 350 250" class="w-full h-auto">
+                                    <!-- ファイル -->
+                                    <rect x="150" y="50" width="80" height="60" rx="5" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+                                    <text x="190" y="80" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="bold">tetris.js</text>
+                                    <text x="190" y="95" text-anchor="middle" font-size="10" fill="#7f1d1d">現在の状態</text>
+                                    
+                                    <!-- 過去（消えた） -->
+                                    <rect x="50" y="140" width="60" height="45" rx="5" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+                                    <text x="80" y="165" text-anchor="middle" font-size="10" fill="#6b7280">3日前</text>
+                                    <text x="80" y="200" text-anchor="middle" font-size="20" fill="#ef4444">❌</text>
+                                    <text x="80" y="220" text-anchor="middle" font-size="9" fill="#7f1d1d">もう戻れない</text>
+                                    
+                                    <rect x="130" y="140" width="60" height="45" rx="5" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+                                    <text x="160" y="165" text-anchor="middle" font-size="10" fill="#6b7280">昨日</text>
+                                    <text x="160" y="200" text-anchor="middle" font-size="20" fill="#ef4444">❌</text>
+                                    <text x="160" y="220" text-anchor="middle" font-size="9" fill="#7f1d1d">消えた</text>
+                                    
+                                    <rect x="210" y="140" width="60" height="45" rx="5" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+                                    <text x="240" y="165" text-anchor="middle" font-size="10" fill="#6b7280">1時間前</text>
+                                    <text x="240" y="200" text-anchor="middle" font-size="20" fill="#ef4444">❌</text>
+                                    <text x="240" y="220" text-anchor="middle" font-size="9" fill="#7f1d1d">上書きされた</text>
+                                </svg>
+                            </div>
+                            
+                            <!-- Gitありの開発 -->
+                            <div class="bg-white rounded-lg p-4 shadow">
+                                <h4 class="font-bold text-green-600 mb-3">😊 Gitありの開発</h4>
+                                <svg viewBox="0 0 350 250" class="w-full h-auto">
+                                    <!-- 現在のファイル -->
+                                    <rect x="150" y="50" width="80" height="60" rx="5" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="190" y="80" text-anchor="middle" font-size="12" fill="#16a34a" font-weight="bold">tetris.js</text>
+                                    <text x="190" y="95" text-anchor="middle" font-size="10" fill="#166534">最新版</text>
+                                    
+                                    <!-- 過去のバージョン（全部残ってる） -->
+                                    <rect x="50" y="140" width="60" height="45" rx="5" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="80" y="160" text-anchor="middle" font-size="10" fill="#16a34a">3日前</text>
+                                    <text x="80" y="175" text-anchor="middle" font-size="9" fill="#166534">v1.0</text>
+                                    <text x="80" y="200" text-anchor="middle" font-size="20" fill="#22c55e">✅</text>
+                                    <text x="80" y="220" text-anchor="middle" font-size="9" fill="#16a34a">いつでも戻れる</text>
+                                    
+                                    <rect x="130" y="140" width="60" height="45" rx="5" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="160" y="160" text-anchor="middle" font-size="10" fill="#16a34a">昨日</text>
+                                    <text x="160" y="175" text-anchor="middle" font-size="9" fill="#166534">v1.5</text>
+                                    <text x="160" y="200" text-anchor="middle" font-size="20" fill="#22c55e">✅</text>
+                                    <text x="160" y="220" text-anchor="middle" font-size="9" fill="#16a34a">保存済み</text>
+                                    
+                                    <rect x="210" y="140" width="60" height="45" rx="5" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="240" y="160" text-anchor="middle" font-size="10" fill="#16a34a">1時間前</text>
+                                    <text x="240" y="175" text-anchor="middle" font-size="9" fill="#166534">v2.0</text>
+                                    <text x="240" y="200" text-anchor="middle" font-size="20" fill="#22c55e">✅</text>
+                                    <text x="240" y="220" text-anchor="middle" font-size="9" fill="#16a34a">全部残ってる</text>
+                                    
+                                    <!-- 矢印 -->
+                                    <path d="M 80 135 L 80 120" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowhead-up)"/>
+                                    <path d="M 160 135 L 160 120" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowhead-up)"/>
+                                    <path d="M 240 135 L 240 120" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowhead-up)"/>
+                                    <defs>
+                                        <marker id="arrowhead-up" markerWidth="10" markerHeight="10" refX="5" refY="0" orient="auto">
+                                            <polygon points="5 0, 0 5, 10 5" fill="#22c55e"/>
+                                        </marker>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-4 bg-blue-100 rounded-lg">
+                            <p class="text-center text-blue-800 font-semibold">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                Gitを使えば、すべての変更履歴が保存されて、いつでも好きな時点に戻れる！
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- セクション: セットアップ -->
+        <section id="setup" class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-cog text-purple-600 mr-3"></i>セットアップガイド
+                </h2>
+                
+                <!-- ステップカード -->
+                <div class="space-y-6">
+                    <!-- Step 1 -->
+                    <div class="border-l-4 border-purple-600 pl-6 relative">
+                        <div class="absolute -left-3 top-0 w-6 h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-sm font-bold">1</div>
+                        <h3 class="text-xl font-bold mb-3">GitHubアカウントの作成（5分）</h3>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <ol class="space-y-2 text-gray-700">
+                                <li>1. <a href="https://github.com" target="_blank" class="text-purple-600 hover:underline">GitHub.com</a>にアクセス</li>
+                                <li>2. 「Sign up」をクリック</li>
+                                <li>3. ユーザー名、メール、パスワードを入力</li>
+                            </ol>
+                            <button class="copy-btn mt-3 bg-purple-100 text-purple-700 px-4 py-2 rounded hover:bg-purple-200 transition">
+                                <i class="fas fa-external-link-alt mr-2"></i>GitHubを開く
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="border-l-4 border-indigo-600 pl-6 relative">
+                        <div class="absolute -left-3 top-0 w-6 h-6 bg-indigo-600 rounded-full text-white flex items-center justify-center text-sm font-bold">2</div>
+                        <h3 class="text-xl font-bold mb-3">GitHub CLIのインストール</h3>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <p class="mb-3 text-gray-700">Claude Codeに以下を入力するだけ：</p>
+                            <div class="code-block">
+                                <div class="code-content">
+                                    <pre>GitHub CLIをインストールして。
+私のパソコンは[Windows/Mac]です。</pre>
+                                    <button class="copy-code absolute top-2 right-2 bg-white/10 text-white px-3 py-1 rounded hover:bg-white/20 transition">
+                                        <i class="fas fa-copy"></i> コピー
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="border-l-4 border-purple-600 pl-6 relative">
+                        <div class="absolute -left-3 top-0 w-6 h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-sm font-bold">3</div>
+                        <h3 class="text-xl font-bold mb-3">認証設定（超重要！）</h3>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <p class="mb-3 text-gray-700">Claude Codeに以下を入力：</p>
+                            <div class="code-block mb-4">
+                                <div class="code-content">
+                                    <pre>GitHub CLIの認証設定をして。
+ブラウザで認証する方法でお願い。</pre>
+                                    <button class="copy-code absolute top-2 right-2 bg-white/10 text-white px-3 py-1 rounded hover:bg-white/20 transition">
+                                        <i class="fas fa-copy"></i> コピー
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                                <p class="text-sm"><i class="fas fa-info-circle text-yellow-600 mr-2"></i>ブラウザが開いたら「Authorize GitHub CLI」をクリック！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- セクション: コマンド -->
+        <section id="commands" class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-terminal text-purple-600 mr-3"></i>日本語でGitHubを操作
+                </h2>
+                
+                <p class="text-lg text-gray-700 mb-6">
+                    Claude Codeなら、すべて日本語で指示できます！難しいコマンドを覚える必要はありません。
+                </p>
+                
+                <!-- コマンド例のタブ -->
+                <div class="mb-6">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <button class="tab-btn px-4 py-2 bg-purple-600 text-white rounded-lg" data-tab="basic">
+                            基本操作
+                        </button>
+                        <button class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300" data-tab="save">
+                            保存・アップロード
+                        </button>
+                        <button class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300" data-tab="history">
+                            履歴管理
+                        </button>
+                    </div>
+                    
+                    <!-- タブコンテンツ -->
+                    <div class="tab-content" id="basic">
+                        <div class="space-y-4">
+                            <div class="command-card bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg p-4">
+                                <p class="font-semibold text-purple-700 mb-2">プロジェクトの初期化</p>
+                                <div class="code-block">
+                                    <div class="code-content text-sm">
+                                        <pre>このフォルダをGitHubのプロジェクトにして</pre>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">→ git init と gh repo create を実行</p>
+                            </div>
+                            
+                            <div class="command-card bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg p-4">
+                                <p class="font-semibold text-purple-700 mb-2">状態確認</p>
+                                <div class="code-block">
+                                    <div class="code-content text-sm">
+                                        <pre>現在の変更状況を教えて</pre>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">→ git status を実行</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content hidden" id="save">
+                        <div class="space-y-4">
+                            <div class="command-card bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4">
+                                <p class="font-semibold text-indigo-700 mb-2">変更を保存</p>
+                                <div class="code-block">
+                                    <div class="code-content text-sm">
+                                        <pre>「ヘッダーを追加」という名前で保存して</pre>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">→ git add . と git commit を実行</p>
+                            </div>
+                            
+                            <div class="command-card bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4">
+                                <p class="font-semibold text-indigo-700 mb-2">GitHubにアップロード</p>
+                                <div class="code-block">
+                                    <div class="code-content text-sm">
+                                        <pre>GitHubに変更をアップロードして</pre>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">→ git push を実行</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content hidden" id="history">
+                        <div class="space-y-4">
+                            <div class="command-card bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4">
+                                <p class="font-semibold text-green-700 mb-2">履歴を見る</p>
+                                <div class="code-block">
+                                    <div class="code-content text-sm">
+                                        <pre>最近の変更履歴を10個見せて</pre>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">→ git log を実行</p>
+                            </div>
+                            
+                            <div class="command-card bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4">
+                                <p class="font-semibold text-green-700 mb-2">過去に戻る</p>
+                                <div class="code-block">
+                                    <div class="code-content text-sm">
+                                        <pre>「ヘッダー追加」の前の状態に戻して</pre>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">→ git checkout や git revert を実行</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- セクション: 実践 -->
+        <section id="practice" class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-gamepad text-purple-600 mr-3"></i>実践してみよう！Electronゲーム改良でGit活用
+                </h2>
+                
+                <div class="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-rocket mr-2"></i>Claude Codeでテトリスを作って、どんどん改良しよう！
+                    </h3>
+                    
+                    <p class="text-gray-700 mb-4">
+                        Claude Codeなら「Electronでテトリス作って」の一言で基本ゲームが完成！
+                        その後、デザイン変更やキャラ追加など、改良のたびに「セーブポイント」を作ることが超重要です。
+                    </p>
+                    
+                    <!-- 開発の流れ -->
+                    <div class="mb-6">
+                        <h4 class="font-bold text-lg mb-3">
+                            <i class="fas fa-code-branch text-purple-600 mr-2"></i>
+                            Electronゲーム改良の流れとGit活用
+                        </h4>
+                        
+                        <div class="space-y-4">
+                            <!-- ステップ0: 初期作成 -->
+                            <div class="step-card bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4 shadow">
+                                <div class="flex items-start">
+                                    <span class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">0</span>
+                                    <div class="flex-1">
+                                        <p class="font-semibold mb-2">🚀 Claude Codeで一発作成！</p>
+                                        <p class="text-sm text-gray-600 mb-2">Electronでテトリスゲームを作成</p>
+                                        <div class="code-block">
+                                            <div class="code-content text-sm">
+                                                <pre>Electronでテトリスゲーム作って。
+package.jsonも設定して、npm run devで起動できるようにして。
+「初期テトリス完成」という名前で保存して、GitHubにアップロード</pre>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 bg-blue-50 border-l-4 border-blue-400 p-2">
+                                            <p class="text-xs font-semibold text-blue-700">
+                                                <i class="fas fa-folder-open mr-1"></i>生成されるファイル: 
+                                                package.json, main.js, renderer.js, index.html, style.css
+                                            </p>
+                                        </div>
+                                        <div class="mt-2 bg-yellow-50 border-l-4 border-yellow-400 p-2">
+                                            <p class="text-xs font-semibold text-yellow-700">
+                                                <i class="fas fa-exclamation-circle mr-1"></i>重要: node_modulesは自動的にGitから除外されます（.gitignore）
+                                            </p>
+                                        </div>
+                                        <div class="mt-2 bg-green-50 border-l-4 border-green-400 p-2">
+                                            <p class="text-xs font-semibold text-green-700">✅ セーブポイント0: 基本ゲーム完成！</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- ステップ1: デザイン変更 -->
+                            <div class="step-card bg-white rounded-lg p-4 shadow">
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</span>
+                                    <div class="flex-1">
+                                        <p class="font-semibold mb-2">🎨 かっこいいデザインに変更</p>
+                                        <p class="text-sm text-gray-600 mb-2">ネオンカラーでサイバーパンク風に！</p>
+                                        <div class="code-block">
+                                            <div class="code-content text-sm">
+                                                <pre>テトリスのデザインをサイバーパンク風に変更して。
+ネオンカラーで光るブロックにして、背景も未来的にして。
+「サイバーパンクデザインに変更」で保存してプッシュ</pre>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 bg-blue-50 border-l-4 border-blue-400 p-2">
+                                            <p class="text-xs text-blue-700">
+                                                npm run dev でテスト → かっこいい！
+                                            </p>
+                                        </div>
+                                        <div class="mt-2 bg-green-50 border-l-4 border-green-400 p-2">
+                                            <p class="text-xs font-semibold text-green-700">✅ セーブポイント1: デザイン変更完了</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- ステップ2: キャラクター追加 -->
+                            <div class="step-card bg-white rounded-lg p-4 shadow">
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">2</span>
+                                    <div class="flex-1">
+                                        <p class="font-semibold mb-2">👾 キャラクターの立ち絵を追加</p>
+                                        <p class="text-sm text-gray-600 mb-2">ゲーム画面横にマスコットキャラを表示</p>
+                                        <div class="code-block">
+                                            <div class="code-content text-sm">
+                                                <pre>ゲーム画面の右側にキャラクターの立ち絵を追加して。
+assetsフォルダを作って画像を管理して。
+キャラがスコアに応じて表情を変えるようにして。
+「キャラクター立ち絵追加」で保存してプッシュ</pre>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 bg-green-50 border-l-4 border-green-400 p-2">
+                                            <p class="text-xs font-semibold text-green-700">✅ セーブポイント2: キャラ追加完了</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- バグ発生時の対処 -->
+                            <div class="bg-red-50 border-2 border-red-300 rounded-lg p-4">
+                                <h5 class="font-bold text-red-700 mb-2">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    バグ発生！画面レイアウトが崩れた！
+                                </h5>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    エフェクトを追加したら、キャラクターが画面からはみ出して、ゲーム画面も崩れた...
+                                </p>
+                                <div class="code-block">
+                                    <div class="code-content text-sm">
+                                        <pre>git statusで変更内容を確認して。
+最近のコミット履歴を見せて。
+「キャラクター立ち絵追加」の時点に戻して。</pre>
+                                    </div>
+                                </div>
+                                <div class="mt-3 bg-green-50 border-l-4 border-green-400 p-3">
+                                    <p class="text-sm font-semibold text-green-700">
+                                        <i class="fas fa-undo mr-2"></i>
+                                        セーブポイント2に戻って、エフェクトを慎重に追加し直し！
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- ステップ3: エフェクト修正版 -->
+                            <div class="step-card bg-white rounded-lg p-4 shadow mt-4">
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">3</span>
+                                    <div class="flex-1">
+                                        <p class="font-semibold mb-2">✨ パーティクルエフェクト（修正版）</p>
+                                        <p class="text-sm text-gray-600 mb-2">ライン消去時にかっこいいエフェクト</p>
+                                        <div class="code-block">
+                                            <div class="code-content text-sm">
+                                                <pre>ライン消去時にパーティクルエフェクトを追加して。
+でも今回はレイアウトを崩さないように注意して。
+「パーティクルエフェクト追加（修正版）」で保存してプッシュ</pre>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 bg-green-50 border-l-4 border-green-400 p-2">
+                                            <p class="text-xs font-semibold text-green-700">✅ セーブポイント3: エフェクト追加成功</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- ステップ4: サウンド追加 -->
+                            <div class="step-card bg-white rounded-lg p-4 shadow">
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">4</span>
+                                    <div class="flex-1">
+                                        <p class="font-semibold mb-2">🔊 BGMと効果音を追加</p>
+                                        <p class="text-sm text-gray-600 mb-2">ゲームを盛り上げる音楽と効果音</p>
+                                        <div class="code-block">
+                                            <div class="code-content text-sm">
+                                                <pre>BGMと効果音を追加して。sounds フォルダに音声ファイルを整理。
+落下音、回転音、ライン消去音、ゲームオーバー音を実装。
+「サウンド機能を実装」で保存してプッシュ</pre>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 bg-green-50 border-l-4 border-green-400 p-2">
+                                            <p class="text-xs font-semibold text-green-700">✅ セーブポイント4: サウンド実装完了</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- ステップ5: ビルドと配布 -->
+                            <div class="step-card bg-white rounded-lg p-4 shadow">
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">5</span>
+                                    <div class="flex-1">
+                                        <p class="font-semibold mb-2">📦 配布用にビルド</p>
+                                        <p class="text-sm text-gray-600 mb-2">友達に配れる実行ファイルを作成</p>
+                                        <div class="code-block">
+                                            <div class="code-content text-sm">
+                                                <pre>electron-builderの設定を追加して、
+Windows用の実行ファイル（.exe）を作成できるようにして。
+「ビルド設定を追加」で保存してプッシュ。
+npm run buildでビルドして。</pre>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 bg-blue-50 border-l-4 border-blue-400 p-2">
+                                            <p class="text-xs text-blue-700">
+                                                <i class="fas fa-box mr-1"></i>distフォルダに.exeファイルが生成される！
+                                            </p>
+                                        </div>
+                                        <div class="mt-2 bg-green-50 border-l-4 border-green-400 p-2">
+                                            <p class="text-xs font-semibold text-green-700">✅ セーブポイント5: 配布版完成！</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Git活用のポイント -->
+                    <div class="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4 mt-6">
+                        <h4 class="font-bold text-yellow-800 mb-3">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            Electronゲーム開発でGitを使うメリット
+                        </h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-semibold text-yellow-700 mb-2">🎮 開発中のメリット</h5>
+                                <ul class="text-sm space-y-1 text-gray-700">
+                                    <li>• デザイン変更ごとにセーブポイント作成</li>
+                                    <li>• レイアウト崩れたら即座に復元</li>
+                                    <li>• package.jsonの変更履歴も管理</li>
+                                    <li>• 新機能を安心して試せる</li>
+                                    <li>• node_modulesは自動除外で軽量</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-yellow-700 mb-2">🚀 完成後のメリット</h5>
+                                <ul class="text-sm space-y-1 text-gray-700">
+                                    <li>• 改良の過程が全部記録</li>
+                                    <li>• GitHubでソースコード公開</li>
+                                    <li>• リリース版(.exe)も管理可能</li>
+                                    <li>• ポートフォリオとして最高</li>
+                                    <li>• チーム開発も簡単</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- セクション: チェックリスト -->
+        <section id="checklist" class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-check-square text-purple-600 mr-3"></i>学習チェックリスト
+                </h2>
+                
+                <div class="space-y-3">
+                    <label class="checklist-item flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
+                        <input type="checkbox" class="mr-3 w-5 h-5 text-purple-600">
+                        <span class="check-text flex-1">GitHubアカウントを作成した</span>
+                    </label>
+                    
+                    <label class="checklist-item flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
+                        <input type="checkbox" class="mr-3 w-5 h-5 text-purple-600">
+                        <span class="check-text flex-1">GitHub CLIをインストールした</span>
+                    </label>
+                    
+                    <label class="checklist-item flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
+                        <input type="checkbox" class="mr-3 w-5 h-5 text-purple-600">
+                        <span class="check-text flex-1">GitHub CLIの認証設定を完了した</span>
+                    </label>
+                    
+                    <label class="checklist-item flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
+                        <input type="checkbox" class="mr-3 w-5 h-5 text-purple-600">
+                        <span class="check-text flex-1">最初のリポジトリを作成した</span>
+                    </label>
+                    
+                    <label class="checklist-item flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
+                        <input type="checkbox" class="mr-3 w-5 h-5 text-purple-600">
+                        <span class="check-text flex-1">ファイルをコミット（保存）した</span>
+                    </label>
+                    
+                    <label class="checklist-item flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
+                        <input type="checkbox" class="mr-3 w-5 h-5 text-purple-600">
+                        <span class="check-text flex-1">GitHubにプッシュ（アップロード）した</span>
+                    </label>
+                </div>
+                
+                <div class="mt-6 p-4 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-lg">
+                    <p class="text-center text-lg font-semibold">
+                        <span id="checklist-progress">0</span>/6 完了
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- まとめ -->
+        <section class="mb-12">
+            <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-4">
+                    <i class="fas fa-trophy mr-3"></i>おめでとうございます！
+                </h2>
+                <p class="text-lg mb-6">
+                    これであなたもGitHubマスターです！Claude Codeと日本語だけで、プロフェッショナルな開発環境を手に入れました。
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-white/20 rounded-lg p-4">
+                        <i class="fas fa-rocket text-3xl mb-2"></i>
+                        <h3 class="font-semibold mb-1">次のステップ</h3>
+                        <p class="text-sm opacity-90">ブランチ機能やプルリクエストを学ぼう</p>
+                    </div>
+                    <div class="bg-white/20 rounded-lg p-4">
+                        <i class="fas fa-users text-3xl mb-2"></i>
+                        <h3 class="font-semibold mb-1">チーム開発</h3>
+                        <p class="text-sm opacity-90">他の人と協力してプロジェクトを進めよう</p>
+                    </div>
+                    <div class="bg-white/20 rounded-lg p-4">
+                        <i class="fas fa-star text-3xl mb-2"></i>
+                        <h3 class="font-semibold mb-1">オープンソース</h3>
+                        <p class="text-sm opacity-90">世界中のプロジェクトに貢献しよう</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- フッター -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">
+                <i class="fas fa-robot mr-2"></i>
+                Powered by Claude Code & GitHub CLI
+            </p>
+            <p class="text-gray-400 text-sm">
+                コマンドを覚える時代は終わりました。日本語で指示するだけ。
+            </p>
+        </div>
+    </footer>
+    
+    <!-- フローティングボタン -->
+    <button id="to-top" class="fixed bottom-8 right-8 bg-purple-600 text-white p-4 rounded-full shadow-lg hover:bg-purple-700 transition opacity-0 pointer-events-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- JavaScript -->
+    <script>
+        $(document).ready(function() {
+            // プログレスバーの更新
+            function updateProgress() {
+                const scrollTop = $(window).scrollTop();
+                const docHeight = $(document).height() - $(window).height();
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                
+                $('#progress-bar').css('width', scrollPercent + '%');
+                $('#progress-text').text(Math.round(scrollPercent));
+            }
+            
+            $(window).scroll(updateProgress);
+            updateProgress();
+            
+            // タブ切り替え
+            $('.tab-btn').click(function() {
+                const tabId = $(this).data('tab');
+                
+                // ボタンのスタイル変更
+                $('.tab-btn').removeClass('bg-purple-600 text-white').addClass('bg-gray-200 text-gray-700');
+                $(this).removeClass('bg-gray-200 text-gray-700').addClass('bg-purple-600 text-white');
+                
+                // コンテンツの表示切り替え
+                $('.tab-content').addClass('hidden');
+                $('#' + tabId).removeClass('hidden').addClass('fade-in-up');
+            });
+            
+            // コピーボタン
+            $('.copy-code').click(function(e) {
+                e.preventDefault();
+                const code = $(this).siblings('pre').text();
+                navigator.clipboard.writeText(code);
+                
+                const originalText = $(this).html();
+                $(this).html('<i class="fas fa-check"></i> コピー済み');
+                setTimeout(() => {
+                    $(this).html(originalText);
+                }, 2000);
+            });
+            
+            // チェックリスト
+            $('.checklist-item input').change(function() {
+                const $text = $(this).siblings('.check-text');
+                if ($(this).is(':checked')) {
+                    $text.addClass('checked');
+                } else {
+                    $text.removeClass('checked');
+                }
+                
+                // プログレス更新
+                const checked = $('.checklist-item input:checked').length;
+                $('#checklist-progress').text(checked);
+            });
+            
+            // スムーススクロール
+            $('.nav-link').click(function(e) {
+                e.preventDefault();
+                const target = $(this).attr('href');
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 80
+                }, 500);
+            });
+            
+            // トップに戻るボタン
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 300) {
+                    $('#to-top').removeClass('opacity-0 pointer-events-none').addClass('opacity-100');
+                } else {
+                    $('#to-top').addClass('opacity-0 pointer-events-none').removeClass('opacity-100');
+                }
+            });
+            
+            $('#to-top').click(function() {
+                $('html, body').animate({scrollTop: 0}, 500);
+            });
+            
+            // 要素のアニメーション
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        $(entry.target).addClass('fade-in-up');
+                    }
+                });
+            }, observerOptions);
+            
+            $('section').each(function() {
+                observer.observe(this);
+            });
+        });
+    </script>
+</body>
+</html>
